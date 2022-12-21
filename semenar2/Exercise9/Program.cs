@@ -3,13 +3,12 @@ Clear();
 
 int number = new Random().Next(10, 100);
 WriteLine(number);
-int a1 = number / 10;
-int a2 = number % 10;
-if (a1 > a2)
-{
-    WriteLine(a1);
-}
-else
-{
-    WriteLine(a2);
-}
+WriteLine(number/10>number%10?number/10:number%10); // испол. тернарного оператора
+//if (a1 > a2)                                      // обычный код
+//{
+//    WriteLine(a1);
+//}
+//else
+//{
+//    WriteLine(a2);
+//}
