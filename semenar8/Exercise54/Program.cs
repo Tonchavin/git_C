@@ -1,18 +1,19 @@
 ﻿using static System.Console;
+
 Clear();
 
 int[,] Array = GetMatrixArray();
-int[] sum = SumColumnsArray(Array);
+int[,] MaxValue = FindMaxValue(Array);
 
 PrintMatrixArray(Array);
 WriteLine();
-PrintSum(sum);
+PrintMatrixArray(FindMaxValue(Array));
 
 int[,] GetMatrixArray()
 {
     Random rnd = new Random();
     int SizeRows = rnd.Next(2, 6);
-    int SizeColumns = rnd.Next(2, 8);
+    int SizeColumns = rnd.Next(2, 5);
     int[,] resultArray = new int[SizeRows, SizeColumns];
     for (int i = 0; i < SizeRows; i++)
     {
@@ -24,22 +25,30 @@ int[,] GetMatrixArray()
     return resultArray;
 }
 
-int[] SumColumnsArray(int[,] inArray)
+int[,] FindMaxValue(int[,] inArray)
 {
-    int k = inArray.GetLength(1);
-    int[] resultArray = new int[k];
-
-
-    for (int j = 0; j < inArray.GetLength(0); j++)
+    int row = inArray.GetLength(0);
+    int column = inArray.GetLength(1);
+    int[,] resultArray = new int[row, column];
+    int temp = 0;
+    for (int i = 0; i < row; i++)
     {
-        for (int i = 0; i < inArray.GetLength(1); i++)
+        for (int j = 0; j < column; j++)
         {
-            resultArray[i] += inArray[j, i];
+            resultArray[i,j] = inArray[i,j];
+            for (int m = 0; m < column - 1; m++)
+            {
+                if (resultArray[i, m] < resultArray[i, m + 1])
+                {
+                    temp = resultArray[i, m + 1];
+                    resultArray[i, m + 1] = resultArray[i, m];
+                    resultArray[i, m] = temp;
+                }
+            }
         }
     }
     return resultArray;
 }
-
 
 void PrintMatrixArray(int[,] inArray)
 {
@@ -50,13 +59,5 @@ void PrintMatrixArray(int[,] inArray)
             Write($"{inArray[i, j],5} ");
         }
         WriteLine();
-    }
-}
-
-void PrintSum(int[] inArray)
-{
-    for (int i = 0; i < inArray.Length; i++)
-    {
-        Write($"{inArray[i],5} ");
     }
 }
